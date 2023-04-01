@@ -5,9 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46a2df0f-2591-424b-ad08-082b080ba00d" name="Changes" comment="created 2 files">
+      <change afterPath="$PROJECT_DIR$/src/ru/devj110/homework2/AudioFile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/devj110/homework2/Dimension.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/devj110/homework2/Document.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/devj110/homework2/Duration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/devj110/homework2/File.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/devj110/homework2/Image.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/devj110/homework2/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/devj110/homework2/MediaFile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/devj110/homework2/TablePrinter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/devj110/homework2/Video.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ru/devj110/homework1/Country.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/devj110/homework1/Country.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ru/devj110/homework1/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/devj110/homework1/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +53,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/SnihMV/IdeaProjects/SPBGPU_Course_Homework/src/ru/devj110/homework2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -74,6 +83,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="created 2 files" />
