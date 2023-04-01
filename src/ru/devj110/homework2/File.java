@@ -2,7 +2,7 @@ package ru.devj110.homework2;
 
 public abstract class File {
     private String name;
-    private long size;
+    private Long size;
     private String format;
 
     public File(String name, long size, String format) {
@@ -32,7 +32,7 @@ public abstract class File {
         this.name = name;
     }
 
-    public long getSize() {
+    public Long getSize() {
         return size;
     }
 

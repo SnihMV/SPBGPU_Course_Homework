@@ -1,11 +1,11 @@
 package ru.devj110.homework2;
 
-public class Image extends File{
+public class Image extends File {
     private Dimension dimension;
 
-    public Image(String name, long size, int width, int height) {
+    public Image(String name, long size, Dimension dimension) {
         super(name, size, "image");
-        this.dimension = new Dimension(width, height);
+        this.dimension = dimension;
     }
 
     public Dimension getDimension() {
@@ -18,6 +18,6 @@ public class Image extends File{
 
     @Override
     public String getDetails() {
-        return getDimension().toString();
+        return super.getDetails() + ", " + getDimension().toString();
     }
 }
