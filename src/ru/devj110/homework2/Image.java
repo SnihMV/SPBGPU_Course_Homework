@@ -17,7 +17,7 @@ public class Image extends File{
     }
 
     @Override
-    protected String getDetails() {
+    public String getDetails() {
         return getDimension().toString();
     }
 }

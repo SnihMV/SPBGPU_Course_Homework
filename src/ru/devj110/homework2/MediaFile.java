@@ -27,7 +27,7 @@ public abstract class MediaFile extends File {
         this.duration = duration;
     }
     @Override
-    protected String getDetails() {
+    public String getDetails() {
         return super.getDetails()+", "+getDescription()+", "+getDuration();
     }
 }

@@ -46,7 +46,7 @@ public abstract class File {
         return name+"|"+size+"|"+getDetails();
     }
 
-    protected String getDetails(){
+    public String getDetails(){
         return getFormat();
     }
 

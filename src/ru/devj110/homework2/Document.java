@@ -18,7 +18,7 @@ public class Document extends File {
     }
 
     @Override
-    protected String getDetails() {
+    public String getDetails() {
         return super.getDetails() + ", " + getPages() + " pages";
     }
 }

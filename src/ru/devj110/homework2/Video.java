@@ -17,7 +17,7 @@ public class Video extends MediaFile{
     }
 
     @Override
-    protected String getDetails() {
+    public String getDetails() {
         return super.getDetails() + ", " +getDimension();
     }
 }
