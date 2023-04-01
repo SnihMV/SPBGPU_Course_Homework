@@ -50,5 +50,9 @@ public abstract class File {
         return getFormat();
     }
 
+    public static void printAll(File[] files){
+            new TablePrinter(files).print();
+    }
+
 
 }
