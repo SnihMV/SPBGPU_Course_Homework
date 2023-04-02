@@ -6,6 +6,14 @@ public class OneDirList {
     private ListItem head;
     private ListItem tail;
 
+    public ListItem getHead() {
+        return head;
+    }
+
+    public ListItem getTail() {
+        return tail;
+    }
+
     public void addToTail(Object value) {
         if (tail != null)
             tail = tail.next = new ListItem(value);
@@ -44,43 +52,45 @@ public class OneDirList {
     public Object popFromTail() {
         if (tail == null)
             return null;
+        Object res = tail.value;
         if (head == tail) {
-            Object res = tail.value;
             head = tail = null;
             return res;
         }
-        ListItem target = head;
-        while (target.next.next != null) {
-            target = target.next;
-        }
-        Object res = target.next.value;
-        target.next = null;
-        tail = target;
+        ListItem aim = head;
+        while (aim.next != tail)
+            aim = aim.next;
+        tail = aim;
+        tail.next = null;
         return res;
     }
 
     public void remove(Object value) {
         if (head == null)
             return;
-        if (head == tail) {
-            if (head.value.equals(value))
-                head = tail = null;
+        if (head.isTheSame(value)) {
+            popFromHead();
             return;
         }
-        ListItem target = head;
-        while (target.next != null) {
-            if (target.value.equals(value)) {
 
+        ListItem prevTrg = head;
+        ListItem target = prevTrg.next;
+        while (target != null) {
+            if (target.isTheSame(value)) {
+                if (target == tail) {
+                    tail = prevTrg;
+                    tail.next = null;
+                } else
+                    prevTrg.next = target.next;
+                return;
             }
-
         }
-
     }
 
     public boolean contains(Object value) {
         ListItem target = head;
         while (target != null) {
-            if (target.value.equals(value))
+            if (target.isTheSame(value))
                 return true;
             target = target.next;
         }
@@ -94,19 +104,29 @@ public class OneDirList {
     public void print() {
         ListItem target = head;
         while (target != null) {
-            System.out.print(target.value.toString() + (target.next == null ? "" : " -> "));
+            System.out.print(target.value + (target.next == null ? "" : " -> "));
             target = target.next;
         }
+        System.out.println();
 
     }
 
 
-    private class ListItem {
+    public class ListItem {
         private Object value;
-        private ListItem next;
+        public ListItem next;
 
         public ListItem(Object value) {
             this.value = value;
+        }
+
+        boolean isTheSame(Object value) {
+            return (this.value != null && this.value.equals(value)) || (this.value == null && value == null);
+        }
+
+        @Override
+        public String toString() {
+            return value != null ? value.toString() : "null";
         }
     }
 }
