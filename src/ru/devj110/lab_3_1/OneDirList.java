@@ -59,6 +59,24 @@ public class OneDirList {
         return res;
     }
 
+    public void remove(Object value) {
+        if (head == null)
+            return;
+        if (head == tail) {
+            if (head.value.equals(value))
+                head = tail = null;
+            return;
+        }
+        ListItem target = head;
+        while (target.next != null) {
+            if (target.value.equals(value)) {
+
+            }
+
+        }
+
+    }
+
     public boolean contains(Object value) {
         ListItem target = head;
         while (target != null) {
@@ -77,6 +95,7 @@ public class OneDirList {
         ListItem target = head;
         while (target != null) {
             System.out.print(target.value.toString() + (target.next == null ? "" : " -> "));
+            target = target.next;
         }
 
     }
