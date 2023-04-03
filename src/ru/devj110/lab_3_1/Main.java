@@ -8,15 +8,17 @@ public class Main {
         list.addToHead("c");
         list.addToTail("d");
 
-        list.print();
+        list.printList();
+        list.customPrint(item -> Integer.toString(item.hashCode()));
         System.out.println(list.contains(null));
         System.out.println(list.isEmpty());
         System.out.println(list.popFromTail());
         list.remove("a");
         System.out.println(list.isEmpty());
 
-        list.print();
-        System.out.println("Head: "+list.getHead()+" Tail: "+list.getTail());
+        list.printList();
+        list.customPrint(i -> Integer.toString(i.toString().length()));
+        System.out.println("Head: "+list.getHead()+"\nTail: "+list.getTail());
         
     }
 }

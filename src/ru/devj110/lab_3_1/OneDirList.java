@@ -1,7 +1,5 @@
 package ru.devj110.lab_3_1;
 
-import java.util.List;
-
 public class OneDirList {
     private ListItem head;
     private ListItem tail;
@@ -74,25 +72,25 @@ public class OneDirList {
         }
 
         ListItem prevTrg = head;
-        ListItem target = prevTrg.next;
-        while (target != null) {
-            if (target.isTheSame(value)) {
-                if (target == tail) {
+        ListItem aim = prevTrg.next;
+        while (aim != null) {
+            if (aim.isTheSame(value)) {
+                if (aim == tail) {
                     tail = prevTrg;
                     tail.next = null;
                 } else
-                    prevTrg.next = target.next;
+                    prevTrg.next = aim.next;
                 return;
             }
         }
     }
 
     public boolean contains(Object value) {
-        ListItem target = head;
-        while (target != null) {
-            if (target.isTheSame(value))
+        ListItem aim = head;
+        while (aim != null) {
+            if (aim.isTheSame(value))
                 return true;
-            target = target.next;
+            aim = aim.next;
         }
         return false;
     }
@@ -101,20 +99,27 @@ public class OneDirList {
         return head == null;
     }
 
-    public void print() {
-        ListItem target = head;
-        while (target != null) {
-            System.out.print(target.value + (target.next == null ? "" : " -> "));
-            target = target.next;
+    private String itemToStr(ListItem item) {
+        return item.toString() + (item.next != null ? " --> " : "");
+    }
+
+    public void printList() {
+       customPrint(item -> item.toString());
+    }
+
+    public void customPrint(Converter c) {
+        ListItem aim = head;
+        while (aim != null) {
+            System.out.print(c.convert(aim) + (aim.next != null ? " --> " : ""));
+            aim = aim.next;
         }
         System.out.println();
-
     }
 
 
     public class ListItem {
         private Object value;
-        public ListItem next;
+        private ListItem next;
 
         public ListItem(Object value) {
             this.value = value;
@@ -126,7 +131,7 @@ public class OneDirList {
 
         @Override
         public String toString() {
-            return value != null ? value.toString() : "null";
+            return (value != null ? value.toString() : "null");
         }
     }
 }
