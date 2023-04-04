@@ -1,6 +1,5 @@
 package ru.devj110.lab_3_2;
 
-import ru.devj110.lab_3_1.OneDirList;
 
 public class TwoDirList {
 
@@ -10,6 +9,7 @@ public class TwoDirList {
     public void addToHead(Object value) {
         ListItem newHead = new ListItem(value);
         if (head != null) {
+            head.prev = newHead;
             newHead.next = head;
             head = newHead;
         } else
@@ -19,6 +19,7 @@ public class TwoDirList {
     public void addToTail(Object value) {
         ListItem newTail = new ListItem(value);
         if (tail != null) {
+            tail.next = newTail;
             newTail.prev = tail;
             tail = newTail;
         } else
@@ -73,17 +74,54 @@ public class TwoDirList {
         return false;
     }
 
-    public void printList() {
-        if (head == null) {
-            System.out.println("List is empty");
+    public void remove(Object value) {
+        if (head == null)
+            return;
+        if (head.isTheSame(value)) {
+            popFromHead();
             return;
         }
+        ListItem aim = head.next;
+        while (aim != null) {
+            if (aim.isTheSame(value)) {
+                if (aim != tail) {
+                    aim.prev.next = aim.next;
+                    aim.next.prev = aim.prev;
+                    return;
+                } else {
+                    tail.prev.next = null;
+                    tail = tail.prev;
+                    return;
+                }
+            }
+            aim = aim.next;
+        }
+
+    }
+
+    public void printList() {
         ListItem aim = head;
         while (aim != null) {
             System.out.print(aim + (aim.next != null ? " --> " : ""));
             aim = aim.next;
         }
         System.out.println();
+    }
+
+    public void transform (Transformer t){
+        ListItem aim = head;
+        while (aim!=null){
+            aim.value = t.transform(aim.value);
+            aim=aim.next;
+        }
+    }
+
+    public void reverseTransform (Transformer t){
+        ListItem aim = tail;
+        while (aim!=null){
+            aim.value = t.transform(aim.value);
+            aim=aim.prev;
+        }
     }
 
     private static class ListItem {

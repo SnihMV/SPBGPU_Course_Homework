@@ -5,13 +5,12 @@ public class Main {
         TwoDirList list = new TwoDirList();
         list.printList();
         list.addToHead("a");
-        list.addToHead(null);
+        list.addToHead("b");
         list.addToHead("c");
         list.addToHead("d");
         list.printList();
-        System.out.println(list.popFromHead());
+        list.transform(value -> Integer.decode(value.toString()));
         list.printList();
-        System.out.println(list.contains(0));
 
     }
 }
