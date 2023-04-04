@@ -1,6 +1,5 @@
 package ru.devj110.lab_3_2;
 
-
 public class TwoDirList {
 
     private ListItem head;
@@ -108,20 +107,83 @@ public class TwoDirList {
         System.out.println();
     }
 
-    public void transform (Transformer t){
+    public void reversePrint() {
+        ListItem aim = tail;
+        while (aim != null) {
+            System.out.print(aim + (aim.prev != null ? " --> " : ""));
+            aim = aim.prev;
+        }
+        System.out.println();
+    }
+
+    public void transform(Transformator t) {
         ListItem aim = head;
-        while (aim!=null){
+        while (aim != null) {
             aim.value = t.transform(aim.value);
-            aim=aim.next;
+            aim = aim.next;
         }
     }
 
-    public void reverseTransform (Transformer t){
+    public void reverseTransform(Transformator t) {
         ListItem aim = tail;
-        while (aim!=null){
+        while (aim != null) {
             aim.value = t.transform(aim.value);
-            aim=aim.prev;
+            aim = aim.prev;
         }
+    }
+
+    public void addArrayToHead(Object[] array) {
+        if (array == null)
+            return;
+        for (int i = array.length - 1; i >= 0; i--) {
+            addToHead(array[i]);
+        }
+    }
+
+    public void addArrayToTail(Object[] array) {
+        if (array == null) return;
+        for (int i = 0; i < array.length; i++) {
+            addToTail(array[i]);
+        }
+    }
+
+    public void addCollectionToHead(Iterable collection) {
+        if (collection == null)
+            return;
+        TwoDirList tmpList = new TwoDirList();
+        for (Object o : collection) {
+            tmpList.addToTail(o);
+        }
+        if (tmpList.head != null) {
+            tmpList.tail.next = this.head;
+            this.head = tmpList.head;
+        }
+    }
+
+    public void addCollectionToTail(Iterable collection) {
+        if (collection == null)
+            return;
+        for (Object value : collection) {
+            addToTail(value);
+        }
+    }
+
+    public void consumeToHead(TwoDirList that) {
+        if (that == null || that.head == null)
+            return;
+        that.tail.next = this.head;
+        this.head.prev = that.tail;
+        this.head = that.head;
+        that.head = that.tail = null;
+    }
+
+    public void consumeToTail(TwoDirList that) {
+        if (that == null || that.head == null)
+            return;
+        that.head.prev = this.tail;
+        this.tail.next = that.head;
+        this.tail = that.tail;
+        that.head = that.tail = null;
     }
 
     private static class ListItem {

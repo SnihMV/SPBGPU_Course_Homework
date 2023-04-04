@@ -1,16 +1,24 @@
 package ru.devj110.lab_3_2;
 
+
 public class Main {
     public static void main(String[] args) {
         TwoDirList list = new TwoDirList();
+        list.addToHead(1);
+        list.addToHead("bfr");
+        list.addToHead('c');
+        list.addToHead(null);
         list.printList();
-        list.addToHead("a");
-        list.addToHead("b");
-        list.addToHead("c");
-        list.addToHead("d");
+        TwoDirList list1 = new TwoDirList();
+        list1.addToHead("gg");
+        list1.addToHead('F');
+        list1.addToHead(42);
+        list1.printList();
+        list.consumeToHead(list1);
         list.printList();
-        list.transform(value -> Integer.decode(value.toString()));
-        list.printList();
+        list.reversePrint();
+
+
 
     }
 }
