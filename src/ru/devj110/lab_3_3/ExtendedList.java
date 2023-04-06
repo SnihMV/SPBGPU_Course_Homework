@@ -1,54 +1,79 @@
 package ru.devj110.lab_3_3;
 
+import java.util.NoSuchElementException;
+
 public class ExtendedList {
 
-    private final int capacity;
+    private static final int DEFAULT_NODE_CAPACITY = 10;
+    private final int nodeCapacity;
     private Node head;
     private Node tail;
 
-    public Node getHead() {
-        return head;
-    }
 
-    public Node getHeadNext() {
-        return head.next;
-    }
-
-    public Node getTail() {
-        return tail;
-    }
-
-    public Node getTailNext() {
-        return tail.next;
+    public ExtendedList(int nodeCapacity) {
+        this.nodeCapacity = nodeCapacity;
+        head = tail = new Node();
     }
 
     public ExtendedList() {
-        this(10);
+        this(DEFAULT_NODE_CAPACITY);
     }
 
-    public ExtendedList(int capacity) {
-        this.capacity = capacity;
-    }
-
-    public void addToHead(Object value) {
-        if (head != null) {
-            if ((tail.next = head.addToHead(value)) != null)
-                tail = tail.next;
-            return;
-        }
-        head = tail = new Node(value);
+    public void recursiveAddToHead(Object value) {
+        if ((tail.next = head.recursiveAddToHead(value)) != null)
+            tail = tail.next;
     }
 
     public void addToTail(Object value) {
-        if (tail == null) {
-            head = tail = new Node(value);
-            return;
-        }
-        if (!tail.isFull()) {
+        if (!tail.isFull())
             tail.addToTail(value);
-            return;
+        else
+            tail = tail.next = new Node(value);
+    }
+
+    public Object peekFromHead() {
+        if (!head.isEmpty())
+            return head.peekFirst();
+        throw new NoSuchElementException("List is empty");
+    }
+
+    public Object peekFromTail() {
+        if (!tail.isEmpty())
+            return tail.peekLast();
+        throw new NoSuchElementException("List is empty");
+    }
+
+    public Object popFromHead() {
+        if (head.isEmpty())
+            throw new NoSuchElementException("List is empty. Nothing to pop from head");
+        Node aim = head;
+        Object res = aim.popFirst();
+        while (aim.next != null) {
+            aim.addToTail(aim.next.popFirst());
+            if (aim.next.isEmpty()) {
+                aim.next = null;
+                tail = aim;
+                break;
+            }
+            aim = aim.next;
         }
-        tail = tail.next = new Node(value);
+        return res;
+    }
+
+    public Object popFromTail() {
+        if (tail.isEmpty())
+            throw new NoSuchElementException("List is empty. Nothing to pop from its tail");
+        Object res = tail.popLast();
+        if (tail.isEmpty()) {
+            if (head != tail) {
+                Node aim = head;
+                while (!aim.next.isEmpty())
+                    aim = aim.next;
+                aim.next = null;
+                tail = aim;
+            }
+        }
+        return res;
     }
 
 
@@ -62,51 +87,87 @@ public class ExtendedList {
     }
 
     private class Node {
-        Object[] array;
+        Object[] dataHolder;
         int size;
         Node next;
 
 
         Node(Object value) {
-            this.array = new Object[capacity];
-            array[0] = value;
-            this.size = 1;
+            this();
+            addToTail(value);
+        }
+
+        Node() {
+            this.dataHolder = new Object[nodeCapacity];
         }
 
         void addToTail(Object value) {
-            array[size++] = value;
+            dataHolder[size++] = value;
         }
 
-        Node addToHead(Object value) {
+        Node recursiveAddToHead(Object value) {
             if (!isFull()) {
-                System.arraycopy(array, 0, array, 1, size++);
-                array[0] = value;
+                addToHead(value);
                 return null;
             }
-            Object excess = array[size - 1];
-            System.arraycopy(array, 0, array, 1, size - 1);
-            array[0] = value;
-            if (next==null)
+            Object excess = dataHolder[size - 1];
+            System.arraycopy(dataHolder, 0, dataHolder, 1, size - 1);
+            dataHolder[0] = value;
+            if (next == null)
                 return new Node(excess);
-            return next.addToHead(excess);
+            return next.recursiveAddToHead(excess);
         }
 
-        Object popFromTail() {
-            return array[--size];
+        void addToHead(Object value) {
+            System.arraycopy(dataHolder, 0, dataHolder, 1, size++);
+            dataHolder[0] = value;
+        }
+
+        Object peekFirst() {
+            return dataHolder[0];
+        }
+
+        Object peekLast() {
+            return dataHolder[size - 1];
+        }
+
+        Object popLast() {
+            return dataHolder[--size];
+        }
+
+        Object popFirst() {
+            Object res = dataHolder[0];
+            System.arraycopy(dataHolder, 1, dataHolder, 0, --size);
+            return res;
+        }
+
+        Object recursivePopFirst() {
+            if (next == null) {
+                return popFirst();
+            }
+            Object res = dataHolder[0];
+            System.arraycopy(dataHolder, 1, dataHolder, 0, --size);
+            addToTail(recursivePopFirst());
+            return res;
+        }
+
+        public boolean isFull() {
+            return size == nodeCapacity;
+        }
+
+        public boolean isEmpty() {
+            return size == 0;
         }
 
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder("[");
             for (int i = 0; i < size; i++) {
-                sb.append((array[i] != null ? array[i].toString() : "null") + (i < size - 1 ? "," : ""));
+                sb.append((dataHolder[i] != null ? dataHolder[i].toString() : "null") + (i < size - 1 ? "," : ""));
             }
             sb.append("]");
             return sb.toString();
         }
 
-        public boolean isFull() {
-            return size == capacity;
-        }
     }
 }
