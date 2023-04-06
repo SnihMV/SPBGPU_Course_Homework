@@ -4,21 +4,26 @@ public class Main {
     public static void main(String[] args) {
         ExtendedList list = new ExtendedList(5);
         list.print();
-        list.addToTail(1);
-        list.addToTail(2);
-        list.addToTail(3);
-        list.addToTail(4);
-        list.addToTail(5);
-        list.addToTail(6);
-        list.addToTail(7);
-        list.addToTail(8);
-        list.addToTail(9);
-        list.addToTail(2);
-        list.addToTail("hello");
+
+        list.addToHead(1);
+        list.addToHead(2);
+        list.addToHead(3);
+        list.addToHead(null);
+        list.addToHead("hello");
+        list.addToHead(42);
+        list.addToHead(13);
+        list.addToHead(true);
+        list.addToHead("privet");
+        list.addToHead(88);
+        list.addToHead(1);
+        list.addToHead("Mike");
+
 
 
 
         list.print();
+        System.out.println("head: "+list.getHead()+" head.next: "+list.getHeadNext());
+        System.out.println("Tail: "+list.getTail()+" tail.next: "+list.getTailNext());
     }
 
 }
