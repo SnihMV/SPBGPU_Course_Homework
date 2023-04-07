@@ -47,9 +47,9 @@ public class ExtendedList {
         if (head.isEmpty())
             throw new NoSuchElementException("List is empty. Nothing to pop from head");
         Node aim = head;
-        Object res = aim.popFirst();
+        Object res = aim.popElement(0);
         while (aim.next != null) {
-            aim.addToTail(aim.next.popFirst());
+            aim.addToTail(aim.next.popElement(0));
             if (aim.next.isEmpty()) {
                 aim.next = null;
                 tail = aim;
@@ -74,6 +74,47 @@ public class ExtendedList {
             }
         }
         return res;
+    }
+
+    public boolean contains(Object value) {
+        if (!head.isEmpty()) {
+            Node aim = head;
+            while (aim != null) {
+                if (aim.contains(value) != -1)
+                    return true;
+                aim = aim.next;
+            }
+        }
+        return false;
+    }
+
+    public boolean isEmpty() {
+        return head.isEmpty();
+    }
+
+    public void remove(Object value) {
+        if (isEmpty())
+            return;
+        if (head == tail) {
+            head.remove(value);
+            return;
+        }
+        Node aim = head;
+        while (aim != null) {
+            if (aim.remove(value)) {
+                while (aim.next != null) {
+                    aim.addToTail(aim.next.popElement(0));
+                    if (aim.next.isEmpty()) {
+                        aim.next = null;
+                        tail = aim;
+                        break;
+                    }
+                    aim = aim.next;
+                }
+                break;
+            }
+            aim = aim.next;
+        }
     }
 
 
@@ -135,20 +176,37 @@ public class ExtendedList {
             return dataHolder[--size];
         }
 
-        Object popFirst() {
-            Object res = dataHolder[0];
-            System.arraycopy(dataHolder, 1, dataHolder, 0, --size);
+        Object popElement(int pos) {
+            Object res = dataHolder[pos];
+            System.arraycopy(dataHolder, pos + 1, dataHolder, pos, --size - pos);
             return res;
         }
 
         Object recursivePopFirst() {
             if (next == null) {
-                return popFirst();
+                return popElement(0);
             }
             Object res = dataHolder[0];
             System.arraycopy(dataHolder, 1, dataHolder, 0, --size);
             addToTail(recursivePopFirst());
             return res;
+        }
+
+        public boolean remove(Object value) {
+            int i;
+            if ((i = contains(value)) != -1) {
+                popElement(i);
+                return true;
+            }
+            return false;
+        }
+
+        public int contains(Object value) {
+            for (int i = 0; i < size; i++) {
+                if (dataHolder[i] != null && dataHolder[i].equals(value) || dataHolder[i] == null && value == null)
+                    return i;
+            }
+            return -1;
         }
 
         public boolean isFull() {
@@ -168,6 +226,7 @@ public class ExtendedList {
             sb.append("]");
             return sb.toString();
         }
+
 
     }
 }
