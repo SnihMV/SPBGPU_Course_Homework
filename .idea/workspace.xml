@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46a2df0f-2591-424b-ad08-082b080ba00d" name="Changes" comment="complete commit">
-      <change afterPath="$PROJECT_DIR$/src/ru/devj110/lab_3_1/Main.java" afterDir="false" />
+    <list default="true" id="46a2df0f-2591-424b-ad08-082b080ba00d" name="Changes" comment="almost done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ru/devj110/lab_3_1/OneDirList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/devj110/lab_3_1/OneDirList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/devj110/lab_3_3/ExtendedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/devj110/lab_3_3/ExtendedList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/devj110/lab_3_3/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/devj110/lab_3_3/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +17,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -28,6 +29,9 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$PROJECT_DIR$/../../../../Java/JDK8/src.zip!/java/util/ArrayList.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -45,6 +49,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "extract.method.default.visibility": "private",
     "last_opened_file_path": "C:/Users/SnihMV/IdeaProjects/SPBGPU_Course_Homework",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -53,6 +58,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="ru.devj110.lab_3_1" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -63,6 +73,7 @@
       <updated>1680190939021</updated>
       <workItem from="1680190940150" duration="1654000" />
       <workItem from="1680448954938" duration="4712000" />
+      <workItem from="1681120914302" duration="6120000" />
     </task>
     <task id="LOCAL-00001" summary="created 2 files">
       <created>1680192688373</created>
@@ -78,7 +89,63 @@
       <option name="project" value="LOCAL" />
       <updated>1680372056978</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="2 commit">
+      <created>1680477205799</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1680477205799</updated>
+    </task>
+    <task id="LOCAL-00004" summary="completely done">
+      <created>1680517427262</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1680517427262</updated>
+    </task>
+    <task id="LOCAL-00005" summary="first commit">
+      <created>1680562237250</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1680562237250</updated>
+    </task>
+    <task id="LOCAL-00006" summary="second commit">
+      <created>1680620052506</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1680620052506</updated>
+    </task>
+    <task id="LOCAL-00007" summary="init commit">
+      <created>1680714827450</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1680714827450</updated>
+    </task>
+    <task id="LOCAL-00008" summary="commit">
+      <created>1680775562039</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1680775562039</updated>
+    </task>
+    <task id="LOCAL-00009" summary="almost done">
+      <created>1680820069959</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1680820069959</updated>
+    </task>
+    <task id="LOCAL-00010" summary="almost done">
+      <created>1680911144853</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1680911144853</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -99,6 +166,23 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <MESSAGE value="created 2 files" />
     <MESSAGE value="complete commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="complete commit" />
+    <MESSAGE value="2 commit" />
+    <MESSAGE value="completely done" />
+    <MESSAGE value="first commit" />
+    <MESSAGE value="second commit" />
+    <MESSAGE value="init commit" />
+    <MESSAGE value="commit" />
+    <MESSAGE value="almost done" />
+    <option name="LAST_COMMIT_MESSAGE" value="almost done" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ArrayIndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="6" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
