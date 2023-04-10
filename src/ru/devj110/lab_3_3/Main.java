@@ -2,7 +2,7 @@ package ru.devj110.lab_3_3;
 
 public class Main {
     public static void main(String[] args) {
-        ExtendedList list = new ExtendedList(3);
+        ExtendedList list = new ExtendedList(5);
         list.print();
 
         list.recursiveAddToHead(1);
@@ -17,6 +17,12 @@ public class Main {
         list.recursiveAddToHead(88);
         list.recursiveAddToHead(1);
         list.recursiveAddToHead("Mike");
+
+        list.print();
+
+        list.remove("hello");
+        list.remove(42);
+
 
         list.print();
 

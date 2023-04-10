@@ -45,18 +45,10 @@ public class ExtendedList {
 
     public Object popFromHead() {
         if (head.isEmpty())
-            throw new NoSuchElementException("List is empty. Nothing to pop from head");
+            throw new NoSuchElementException("List is empty. Nothing to pop from its head");
         Node aim = head;
         Object res = aim.popElement(0);
-        while (aim.next != null) {
-            aim.addToTail(aim.next.popElement(0));
-            if (aim.next.isEmpty()) {
-                aim.next = null;
-                tail = aim;
-                break;
-            }
-            aim = aim.next;
-        }
+        pullUpTo(aim);
         return res;
     }
 
@@ -95,22 +87,22 @@ public class ExtendedList {
     public void remove(Object value) {
         if (isEmpty())
             return;
-        if (head == tail) {
-            head.remove(value);
-            return;
-        }
         Node aim = head;
         while (aim != null) {
             if (aim.remove(value)) {
-                while (aim.next != null) {
-                    aim.addToTail(aim.next.popElement(0));
-                    if (aim.next.isEmpty()) {
-                        aim.next = null;
-                        tail = aim;
-                        break;
-                    }
-                    aim = aim.next;
-                }
+                pullUpTo(aim);
+                break;
+            }
+            aim = aim.next;
+        }
+    }
+
+    private void pullUpTo(Node aim) {
+        while (aim.next != null) {
+            aim.addToTail(aim.next.popElement(0));
+            if (aim.next.isEmpty()) {
+                aim.next = null;
+                tail = aim;
                 break;
             }
             aim = aim.next;
