@@ -19,6 +19,26 @@ public class ExtendedList {
         this(DEFAULT_NODE_CAPACITY);
     }
 
+    public void addToHead(Object value) {
+        Node aim = head;
+        Object tmp;
+        while (aim != null) {
+            if (!aim.isFull()) {
+                aim.addToHead(value);
+                return;
+            }
+            tmp = aim.popLast();
+            aim.addToHead(value);
+            value = tmp;
+            if (aim == tail) {
+                tail = new Node(value);
+                aim.next = tail;
+                return;
+            }
+            aim = aim.next;
+        }
+    }
+
     public void recursiveAddToHead(Object value) {
         if ((tail.next = head.recursiveAddToHead(value)) != null)
             tail = tail.next;
@@ -109,15 +129,23 @@ public class ExtendedList {
         }
     }
 
+    public void convertAll(Converter c) {
+        Node aim = head;
+        while (aim != null) {
+            aim.convert(c);
+            aim = aim.next;
+        }
+    }
 
     public void print() {
         Node aim = head;
         while (aim != null) {
-            System.out.print(aim.toString() + (aim.next != null ? " --> " : ""));
+            System.out.print(aim + (aim.next != null ? " --> " : ""));
             aim = aim.next;
         }
         System.out.println();
     }
+
 
     private class Node {
         Object[] dataHolder;
@@ -138,6 +166,11 @@ public class ExtendedList {
             dataHolder[size++] = value;
         }
 
+        void addToHead(Object value) {
+            System.arraycopy(dataHolder, 0, dataHolder, 1, size++);
+            dataHolder[0] = value;
+        }
+
         Node recursiveAddToHead(Object value) {
             if (!isFull()) {
                 addToHead(value);
@@ -149,11 +182,6 @@ public class ExtendedList {
             if (next == null)
                 return new Node(excess);
             return next.recursiveAddToHead(excess);
-        }
-
-        void addToHead(Object value) {
-            System.arraycopy(dataHolder, 0, dataHolder, 1, size++);
-            dataHolder[0] = value;
         }
 
         Object peekFirst() {
@@ -171,16 +199,6 @@ public class ExtendedList {
         Object popElement(int pos) {
             Object res = dataHolder[pos];
             System.arraycopy(dataHolder, pos + 1, dataHolder, pos, --size - pos);
-            return res;
-        }
-
-        Object recursivePopFirst() {
-            if (next == null) {
-                return popElement(0);
-            }
-            Object res = dataHolder[0];
-            System.arraycopy(dataHolder, 1, dataHolder, 0, --size);
-            addToTail(recursivePopFirst());
             return res;
         }
 
@@ -219,6 +237,10 @@ public class ExtendedList {
             return sb.toString();
         }
 
-
+        public void convert(Converter c) {
+            for (int i = 0; i < size; i++) {
+                dataHolder[i]=c.convert(dataHolder[i]);
+            }
+        }
     }
 }
