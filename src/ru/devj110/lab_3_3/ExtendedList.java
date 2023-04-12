@@ -19,23 +19,29 @@ public class ExtendedList {
         this(DEFAULT_NODE_CAPACITY);
     }
 
+    private Node biteOff(Object[] array, int srcPos) {
+        Object[] res = new Object[nodeCapacity];
+        System.arraycopy(array, srcPos, res, 0, nodeCapacity);
+        return new Node(res);
+    }
+
     public void addToHead(Object value) {
-        Node aim = head;
+        Node node = head;
         Object tmp;
-        while (aim != null) {
-            if (!aim.isFull()) {
-                aim.addToHead(value);
+        while (node != null) {
+            if (!node.isFull()) {
+                node.addToHead(value);
                 return;
             }
-            tmp = aim.popLast();
-            aim.addToHead(value);
+            tmp = node.popLast();
+            node.addToHead(value);
             value = tmp;
-            if (aim == tail) {
+            if (node == tail) {
                 tail = new Node(value);
-                aim.next = tail;
+                node.next = tail;
                 return;
             }
-            aim = aim.next;
+            node = node.next;
         }
     }
 
@@ -66,9 +72,9 @@ public class ExtendedList {
     public Object popFromHead() {
         if (head.isEmpty())
             throw new NoSuchElementException("List is empty. Nothing to pop from its head");
-        Node aim = head;
-        Object res = aim.popElement(0);
-        pullUpTo(aim);
+        Node node = head;
+        Object res = node.popElement(0);
+        pullUp(node);
         return res;
     }
 
@@ -78,11 +84,11 @@ public class ExtendedList {
         Object res = tail.popLast();
         if (tail.isEmpty()) {
             if (head != tail) {
-                Node aim = head;
-                while (!aim.next.isEmpty())
-                    aim = aim.next;
-                aim.next = null;
-                tail = aim;
+                Node node = head;
+                while (!node.next.isEmpty())
+                    node = node.next;
+                node.next = null;
+                tail = node;
             }
         }
         return res;
@@ -90,11 +96,11 @@ public class ExtendedList {
 
     public boolean contains(Object value) {
         if (!head.isEmpty()) {
-            Node aim = head;
-            while (aim != null) {
-                if (aim.contains(value) != -1)
+            Node node = head;
+            while (node != null) {
+                if (node.contains(value) != -1)
                     return true;
-                aim = aim.next;
+                node = node.next;
             }
         }
         return false;
@@ -107,41 +113,48 @@ public class ExtendedList {
     public void remove(Object value) {
         if (isEmpty())
             return;
-        Node aim = head;
-        while (aim != null) {
-            if (aim.remove(value)) {
-                pullUpTo(aim);
+        Node node = head;
+        while (node != null) {
+            if (node.remove(value)) {
+                pullUp(node);
                 break;
             }
-            aim = aim.next;
+            node = node.next;
         }
     }
 
-    private void pullUpTo(Node aim) {
-        while (aim.next != null) {
-            aim.addToTail(aim.next.popElement(0));
-            if (aim.next.isEmpty()) {
-                aim.next = null;
-                tail = aim;
+    private void pullUp(Node node) {
+        while (node.next != null) {
+            node.pullUp();
+            if (node.next.isEmpty()) {
+                node.next = null;
+                tail = node;
                 break;
             }
-            aim = aim.next;
+            node = node.next;
         }
     }
+
+    /*public void addArrayToHead(Object[] array) {
+        for (int i = array.length - 1; i >= 0; i--) {
+            addToHead(array[i]);
+        }
+    }*/
+
 
     public void convertAll(Converter c) {
-        Node aim = head;
-        while (aim != null) {
-            aim.convert(c);
-            aim = aim.next;
+        Node node = head;
+        while (node != null) {
+            node.convert(c);
+            node = node.next;
         }
     }
 
     public void print() {
-        Node aim = head;
-        while (aim != null) {
-            System.out.print(aim + (aim.next != null ? " --> " : ""));
-            aim = aim.next;
+        Node node = head;
+        while (node != null) {
+            System.out.print(node + (node.next != null ? " --> " : ""));
+            node = node.next;
         }
         System.out.println();
     }
@@ -156,6 +169,13 @@ public class ExtendedList {
         Node(Object value) {
             this();
             addToTail(value);
+        }
+
+        Node(Object[] array) {
+            if (array.length != nodeCapacity)
+                throw new IllegalArgumentException("Incorrect array length");
+            this.dataHolder = array;
+            this.size = nodeCapacity;
         }
 
         Node() {
@@ -211,6 +231,21 @@ public class ExtendedList {
             return false;
         }
 
+        public void pullUp() {
+            int lack = nodeCapacity - size;
+            int moved = next.size >= lack ? lack : next.size;
+            System.arraycopy(next.dataHolder, 0, this.dataHolder, size, moved);
+            System.arraycopy(next.dataHolder, moved, next.dataHolder, 0, next.size - moved);
+            this.size += moved;
+            next.size -= moved;
+        }
+
+        public void convert(Converter c) {
+            for (int i = 0; i < size; i++) {
+                dataHolder[i] = c.convert(dataHolder[i]);
+            }
+        }
+
         public int contains(Object value) {
             for (int i = 0; i < size; i++) {
                 if (dataHolder[i] != null && dataHolder[i].equals(value) || dataHolder[i] == null && value == null)
@@ -235,12 +270,6 @@ public class ExtendedList {
             }
             sb.append("]");
             return sb.toString();
-        }
-
-        public void convert(Converter c) {
-            for (int i = 0; i < size; i++) {
-                dataHolder[i]=c.convert(dataHolder[i]);
-            }
         }
     }
 }
