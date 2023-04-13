@@ -11,6 +11,8 @@ public class ExtendedList {
 
 
     public ExtendedList(int nodeCapacity) {
+        if (nodeCapacity <= 0)
+            throw new IllegalArgumentException("Node capacity must be > 0");
         this.nodeCapacity = nodeCapacity;
         head = tail = new Node();
     }
@@ -19,10 +21,28 @@ public class ExtendedList {
         this(DEFAULT_NODE_CAPACITY);
     }
 
-    private Node biteOff(Object[] array, int srcPos) {
-        Object[] res = new Object[nodeCapacity];
-        System.arraycopy(array, srcPos, res, 0, nodeCapacity);
-        return new Node(res);
+    public ExtendedList(Object[] array, int nodeCapacity) {
+        this(nodeCapacity);
+        int rest = array.length;
+        Node node = head;
+        while (true) {
+            int srcPos = array.length - rest;
+            int copiedLength = Math.min(nodeCapacity, rest);
+            System.arraycopy(array, srcPos, node.dataHolder, 0, copiedLength);
+            rest -= copiedLength;
+            node.size += copiedLength;
+            if (rest > 0) {
+                node.next = new Node();
+                node = node.next;
+            } else {
+                tail = node;
+                break;
+            }
+        }
+    }
+
+    public ExtendedList(Object[] array) {
+        this(array, DEFAULT_NODE_CAPACITY);
     }
 
     public void addToHead(Object value) {
@@ -135,12 +155,35 @@ public class ExtendedList {
         }
     }
 
-    /*public void addArrayToHead(Object[] array) {
+    public void addArrayToHeadSimple(Object[] array) {
         for (int i = array.length - 1; i >= 0; i--) {
             addToHead(array[i]);
         }
-    }*/
+    }
 
+    public void addArrayToTailSimple(Object[] array) {
+        for (int i = 0; i < array.length; i++) {
+            addToTail(array[i]);
+        }
+    }
+
+    public void addArrayToHead(Object[] array) {
+        if (array.length == 0)
+            return;
+        ExtendedList that = new ExtendedList(array, nodeCapacity);
+        that.tail.next = this.head;
+        this.head = that.head;
+        pullUp(that.tail);
+    }
+
+    public void addArrayToTail(Object[] array) {
+        if (array.length == 0)
+            return;
+        ExtendedList that = new ExtendedList(array, nodeCapacity);
+        this.tail.next = that.head;
+        pullUp(this.tail);
+        this.tail = that.tail;
+    }
 
     public void convertAll(Converter c) {
         Node node = head;
@@ -266,7 +309,7 @@ public class ExtendedList {
         public String toString() {
             StringBuilder sb = new StringBuilder("[");
             for (int i = 0; i < size; i++) {
-                sb.append((dataHolder[i] != null ? dataHolder[i].toString() : "null") + (i < size - 1 ? "," : ""));
+                sb.append((dataHolder[i] != null ? dataHolder[i].toString() : "null") + (i < size - 1 ? ", " : ""));
             }
             sb.append("]");
             return sb.toString();
