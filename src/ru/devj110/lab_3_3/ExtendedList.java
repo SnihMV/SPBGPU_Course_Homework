@@ -185,6 +185,52 @@ public class ExtendedList {
         this.tail = that.tail;
     }
 
+    public void addCollectionToHead(Iterable collection) {
+        if (collection == null)
+            throw new IllegalArgumentException("Input collection is null");
+        ExtendedList tmp = new ExtendedList(nodeCapacity);
+        for (Object value : collection) {
+            tmp.addToTail(value);
+        }
+        consumeToHead(tmp);
+    }
+
+    public void addCollectionToTail(Iterable collection) {
+        if (collection == null)
+            throw new IllegalArgumentException("Input collection is null");
+        for (Object value : collection) {
+            addToTail(value);
+        }
+    }
+
+    public void consumeToHead(ExtendedList list) {
+        ExtendedList that = list;
+        if (list.nodeCapacity != this.nodeCapacity)
+            that = getRestructured(list, this.nodeCapacity);
+        that.tail.next = this.head;
+        pullUp(that.tail);
+        this.head = that.head;
+        list.head = list.tail = null;
+    }
+
+    public void consumeToTail(ExtendedList list) {
+        ExtendedList that = list;
+        if (list.nodeCapacity != this.nodeCapacity)
+            that = getRestructured(list, this.nodeCapacity);
+        this.tail.next = that.head;
+        pullUp(this.tail);
+        this.tail = that.tail;
+        list.head = list.tail = null;
+    }
+
+    public static ExtendedList getRestructured(ExtendedList list, int nodeCapacity) {
+        ExtendedList tmp = new ExtendedList(nodeCapacity);
+        while (!list.isEmpty()) {
+            tmp.addToTail(list.popFromHead());
+        }
+        return tmp;
+    }
+
     public void convertAll(Converter c) {
         Node node = head;
         while (node != null) {
@@ -208,6 +254,9 @@ public class ExtendedList {
         int size;
         Node next;
 
+        Node() {
+            this.dataHolder = new Object[nodeCapacity];
+        }
 
         Node(Object value) {
             this();
@@ -215,15 +264,14 @@ public class ExtendedList {
         }
 
         Node(Object[] array) {
-            if (array.length != nodeCapacity)
+            this();
+            if (array.length > nodeCapacity)
                 throw new IllegalArgumentException("Incorrect array length");
-            this.dataHolder = array;
-            this.size = nodeCapacity;
+            System.arraycopy(array,0, dataHolder,0, array.length);
+            this.size += array.length;
         }
 
-        Node() {
-            this.dataHolder = new Object[nodeCapacity];
-        }
+
 
         void addToTail(Object value) {
             dataHolder[size++] = value;
