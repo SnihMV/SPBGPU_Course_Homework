@@ -1,4 +1,4 @@
-package ru.devj110.lab_3_1;
+package ru.devj110.lab_3_1_List;
 
 public class Main {
     public static void main(String[] args) {

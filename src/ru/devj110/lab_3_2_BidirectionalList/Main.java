@@ -1,4 +1,4 @@
-package ru.devj110.lab_3_2;
+package ru.devj110.lab_3_2_BidirectionalList;
 
 
 public class Main {
