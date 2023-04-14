@@ -1,4 +1,4 @@
-package ru.devj110.lab_3_3;
+package ru.devj110.lab_3_3_ExtendedList;
 
 import java.util.NoSuchElementException;
 
