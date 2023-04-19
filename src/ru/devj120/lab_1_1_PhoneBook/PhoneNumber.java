@@ -1,4 +1,4 @@
-package ru.devj120.lab_2_1_PhoneBook;
+package ru.devj120.lab_1_1_PhoneBook;
 
 import java.util.Objects;
 
