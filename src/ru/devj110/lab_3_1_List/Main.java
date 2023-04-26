@@ -2,23 +2,34 @@ package ru.devj110.lab_3_1_List;
 
 public class Main {
     public static void main(String[] args) {
-        OneDirList list = new OneDirList();
-        list.addToHead("a");
-        list.addToTail(null);
-        list.addToHead("c");
-        list.addToTail("d");
+        OneDirList<Cat> list = new OneDirList<>();
+        list.addToHead(new Cat("Barsik"));
+        list.addToHead(new Cat("Murzik"));
+        list.addToTail(new Cat("Maarsik"));
 
-        list.printList();
-        list.customPrint(item -> Integer.toString(item.hashCode()));
-        System.out.println(list.contains(null));
-        System.out.println(list.isEmpty());
-        System.out.println(list.popFromTail());
-        list.remove("a");
-        System.out.println(list.isEmpty());
+        list.transformValues(v -> new Cat(v.getName().toUpperCase()));
 
-        list.printList();
-        list.customPrint(i -> Integer.toString(i.toString().length()));
-        System.out.println("Head: "+list.getHead()+"\nTail: "+list.getTail());
-        
+        list.print();
+
     }
+
+    static class Cat {
+        private String name;
+
+        public Cat(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public String toString() {
+            return "Cat{" +
+                    "name='" + name + '\'' +
+                    '}';
+        }
+    }
+
 }
