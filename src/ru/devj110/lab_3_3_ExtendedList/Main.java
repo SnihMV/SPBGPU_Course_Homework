@@ -12,17 +12,8 @@ public class Main {
         list.addToHead("gg");
         list.addToTail("tail");
         list.print();
-        list.remove("jo");
-        list.print();
-        list = list.restructure(4);
-        list.print();
-        String s1 = list.popFromHead();
-        System.out.println(s1);
-        list.print();
-        list = list.restructure(10);
-        list.print();
 
-        for (String s : list) {
+        for (String s : list.after("1")) {
             System.out.println(s);
         }
     }

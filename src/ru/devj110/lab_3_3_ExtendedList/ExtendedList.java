@@ -1,6 +1,8 @@
 package ru.devj110.lab_3_3_ExtendedList;
 
+
 import java.util.Iterator;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import static java.lang.Math.min;
@@ -117,20 +119,25 @@ public class ExtendedList<E> implements Iterable<E> {
         return res;
     }
 
-    private Node<E> findNodeWith(E value) {
+    private Address getAddress(E value) {
         if (!head.isEmpty()) {
             Node<E> node = head;
             while (node != null) {
-                if (node.contains(value))
-                    return node;
+                int pos = -1;
+                if ((pos = node.getPosWith(value)) != -1)
+                    return new Address(node, pos);
                 node = node.next;
             }
         }
         return null;
     }
 
+    private Node<E> getNodeWith(E value) {
+        return getAddress(value) != null ? getAddress(value).getNode() : null;
+    }
+
     public boolean contains(E value) {
-        return findNodeWith(value) != null;
+        return getNodeWith(value) != null;
     }
 
     public boolean isEmpty() {
@@ -264,7 +271,11 @@ public class ExtendedList<E> implements Iterable<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new XListIterator<E>(head, 0);
+        return new XListIterator<>(new Address(head,0));
+    }
+
+    public Iterable<E> after(E value) {
+        return () -> new XListIterator<>(getAddress(value));
     }
 
 
@@ -382,15 +393,17 @@ public class ExtendedList<E> implements Iterable<E> {
         private Node<E> nxtNode;
         private int nxtPos;
 
-        public XListIterator(Node<E> startNode, int startPos) {
-            this.nxtNode = startNode;
-            this.nxtPos = startPos;
-        }
 
+        public XListIterator(Address address) {
+            if (address != null) {
+                this.nxtNode = address.getNode();
+                this.nxtPos = address.getPosition();
+            }
+        }
 
         @Override
         public boolean hasNext() {
-            return nxtNode.size - 1 >= nxtPos;
+            return nxtNode != null ? nxtNode.size - 1 >= nxtPos : false;
         }
 
         @Override
@@ -402,6 +415,24 @@ public class ExtendedList<E> implements Iterable<E> {
             } else
                 nxtPos++;
             return res;
+        }
+    }
+
+    private class Address<E> {
+        private final Node<E> node;
+        private final int position;
+
+        public Address(Node<E> node, int position) {
+            this.node = node;
+            this.position = position;
+        }
+
+        public Node<E> getNode() {
+            return node;
+        }
+
+        public int getPosition() {
+            return position;
         }
     }
 }

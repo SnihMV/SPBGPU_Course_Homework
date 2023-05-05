@@ -29,8 +29,7 @@ public class Main {
         li.print();
         li.transformValues(val -> val.toUpperCase());
         li.print();
-        for (String s :
-                li.before("HI")) {
+        for (String s : li.before("HI")) {
             System.out.println(s);
         }
     }
