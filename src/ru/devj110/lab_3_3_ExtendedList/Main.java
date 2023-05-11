@@ -2,6 +2,7 @@ package ru.devj110.lab_3_3_ExtendedList;
 
 public class Main {
     public static void main(String[] args) {
+
         ExtendedList<String> list = new ExtendedList<>(3);
         list.print();
         list.addToHead("hello");
@@ -13,8 +14,9 @@ public class Main {
         list.addToTail("tail");
         list.print();
 
-        for (String s : list.after("1")) {
+        for (String s : list.until("tail")) {
             System.out.println(s);
+
         }
     }
 }
