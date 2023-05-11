@@ -2,8 +2,8 @@ package ru.devj110.lab_3_3_ExtendedList;
 
 
 import java.util.Iterator;
-import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import static java.lang.Math.min;
 
@@ -271,11 +271,15 @@ public class ExtendedList<E> implements Iterable<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new XListIterator<>(new Address(head,0));
+        return new XListIterator<>(new Address(head, 0));
     }
 
     public Iterable<E> after(E value) {
         return () -> new XListIterator<>(getAddress(value));
+    }
+
+    public Iterable<E> until(E value) {
+        return () -> new XListIteratorUntil<>(value);
     }
 
 
@@ -390,8 +394,8 @@ public class ExtendedList<E> implements Iterable<E> {
     }
 
     private class XListIterator<E> implements Iterator<E> {
-        private Node<E> nxtNode;
-        private int nxtPos;
+        protected Node<E> nxtNode;
+        protected int nxtPos;
 
 
         public XListIterator(Address address) {
@@ -415,6 +419,26 @@ public class ExtendedList<E> implements Iterable<E> {
             } else
                 nxtPos++;
             return res;
+        }
+    }
+
+    private class XListIteratorUntil<E> extends XListIterator<E> {
+
+        private E finValue;
+
+        public XListIteratorUntil(E value) {
+            super(new Address(head, 0));
+            this.finValue = value;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return super.hasNext() && !Objects.equals(nxtNode.dataHolder[nxtPos], finValue);
+        }
+
+        @Override
+        public E next() {
+            return super.next();
         }
     }
 
