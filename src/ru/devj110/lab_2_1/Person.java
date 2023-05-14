@@ -1,7 +1,5 @@
 package ru.devj110.lab_2_1;
 
-import javax.sound.midi.Soundbank;
-
 public abstract class Person {
     private String firstName;
     private String lastName;
@@ -17,8 +15,8 @@ public abstract class Person {
         this.verb = verb;
     }
 
-    public void print(){
-        System.out.println("This is "+firstName+" "+lastName+". "+gender.getPronoun()+" "+verb+" at "+getDepartment().getTitle()+" department.");
+    public void print() {
+        System.out.println("This is " + firstName + " " + lastName + ". " + gender.getPronoun() + " " + verb + " at " + getDepartment().getTitle() + " department.");
         System.out.println(getDetailedInfo());
     }
 
@@ -44,7 +42,18 @@ public abstract class Person {
 
     public abstract String getDetailedInfo();
 
-    public static void printAll(Person[] persons){
-        for (Person person:persons) person.print();
+    public static void printAll(Person[] persons) {
+        for (Person person : persons) {
+            person.print();
+        }
+        System.out.println("---------------------");
+    }
+
+
+    public static void printAll(Iterable<? extends Person> persons) {
+        for (Person person :persons) {
+            person.print();
+        }
+        System.out.println("---------------------");
     }
 }
